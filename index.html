@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <main>
+        <div class="container">
+            <span class="title">Temperature Converter</span>
+            <span class="description">Masukan suhu celcius (&deg;C) yang ingin di konversi</span>
+            <input id="input-number" type="number">
+            <span class="description">Result:</span>
+            <ul>
+                <li name="fahrenheit">fahrenheit: 0</li>
+                <li name="reamur">reamur: 0</li>
+                <li name="kelvin">kelvin: 0</li>
+            </ul>
+        </div>
+    </main>
+
+    <script>
+
+        function getNode(selector){
+            return document.querySelector(selector);
+        }
+
+        const inputNumber = getNode("#input-number");
+        const resultNodes = {
+            fahrenheit: getNode('li[name="fahrenheit"]'),
+            reamur: getNode('li[name="reamur"]'),
+            kelvin: getNode('li[name="kelvin"]')
+        };
+
+        inputNumber.oninput = (e) =>{
+
+            const value = Number(e.target.value);
+
+            resultNodes.fahrenheit.textContent = `fahrenheit: ${0.8 * value}`;
+            resultNodes.reamur.textContent = `reamur: ${1.8 * value + 32}`;
+            resultNodes.kelvin.textContent = `kelvin: ${value + 273.15}`;
+        }
+
+
+    </script>
+
+</body>
+</html>
