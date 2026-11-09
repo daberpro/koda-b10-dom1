@@ -6,6 +6,6 @@ inside html list tag and get an input and listen to an event of input with type 
 ![Demo result after refactor](Recording%202026-11-09%20at%2016.17.07.gif)
 ![Result after fix table body](image-2.png)
 
-### Results
+### Old Results
 ![result when no input yet](image-1.png)
 ![result when we enter an input](image.png)
