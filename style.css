@@ -35,7 +35,7 @@ main > div{
     width: 700px;
     height: fit-content;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: start;
     flex-direction: column;
 }
@@ -58,6 +58,13 @@ main > div{
 .history > table > thead > tr > th {
     font-size: 2ch;
     text-align: center;
+}
+
+.history > table > tbody {
+    display: flex;
+    max-height: 400px;
+    overflow-y: scroll;
+    flex-direction: column;
 }
 
 .history > table > tbody > tr {
