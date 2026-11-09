@@ -9,23 +9,89 @@
 <body>
     
     <main>
-        <div class="container">
-            <span class="title">Temperature Converter</span>
-            <span class="description">Masukan suhu celcius (&deg;C) yang ingin di konversi</span>
-            <input id="input-number" type="number">
-            <span class="description">Result:</span>
-            <ul>
-                <li name="fahrenheit">fahrenheit: 0</li>
-                <li name="reamur">reamur: 0</li>
-                <li name="kelvin">kelvin: 0</li>
-            </ul>
+        <div>
+            <div class="container">
+                <div class="container">
+                    
+                    <form action="#">
+                        <div>
+                            <span class="title">Temperature Converter</span>
+                            <label class="description" for="input-number">Masukan suhu celcius (&deg;C) yang ingin di konversi ke Reamur, Fahrenheit, dan Kelvin.</label>
+                        </div>
+                        <input placeholder="0" name="input-celcius" id="input-number" type="number">
+                        <button type="submit">Save</button>
+                    </form>
+                    
+                </div>
+                <span class="description">Result:</span>
+                <ul>
+                    <li name="fahrenheit">fahrenheit: 0</li>
+                    <li name="reamur">reamur: 0</li>
+                    <li name="kelvin">kelvin: 0</li>
+                </ul>
+            </div>
+    
+            <div class="history">
+                <span class="subtitle pad-b-1">History of Convert</span>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Celcius &deg;C</th>
+                            <th>Reamur &deg;R</th>
+                            <th>Kelvin</th>
+                            <th>Fahrenheit &deg;F</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-lists">
+                    </tbody>
+                </table>
+            </div>
         </div>
+
     </main>
 
     <script>
 
+        const tempStorage = [];
+
         function getNode(selector){
             return document.querySelector(selector);
+        }
+
+        function calc(celcius){
+            return {
+                celcius,
+                kelvin: celcius + 273.15,
+                reamur: 1.8 * celcius + 32,
+                fahrenheit: 0.8 * celcius
+            };
+        }
+
+        function renderHistory(){
+            const list = document.querySelector("#history-lists");
+            list.innerHTML = "";
+            tempStorage.forEach((d, i)=>{
+                const tr = document.createElement("tr");
+                const numberTd = document.createElement("td");
+                numberTd.textContent = i + 1;
+                tr.appendChild(numberTd);
+                for(let x in d){
+                    const td = document.createElement("td");
+                    td.textContent = Number(d[x]).toFixed(2);
+                    tr.appendChild(td);
+                }
+                list.appendChild(tr);
+            });
+        }
+
+        const form = getNode("form");
+        form.onsubmit = e =>{
+            e.preventDefault();
+            const data = new FormData(e.target);
+            const value = Number(data.get("input-celcius"));
+            tempStorage.push(calc(value));
+            renderHistory();
         }
 
         const inputNumber = getNode("#input-number");
@@ -38,10 +104,10 @@
         inputNumber.oninput = (e) =>{
 
             const value = Number(e.target.value);
-
-            resultNodes.fahrenheit.textContent = `fahrenheit: ${0.8 * value}`;
-            resultNodes.reamur.textContent = `reamur: ${1.8 * value + 32}`;
-            resultNodes.kelvin.textContent = `kelvin: ${value + 273.15}`;
+            const { kelvin, reamur, fahrenheit } = calc(value);
+            resultNodes.fahrenheit.textContent = `fahrenheit: ${fahrenheit.toFixed(2)}`;
+            resultNodes.reamur.textContent = `reamur: ${reamur.toFixed(2)}`;
+            resultNodes.kelvin.textContent = `kelvin: ${kelvin.toFixed(2)}`;
         }
 
 
